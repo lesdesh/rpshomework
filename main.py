@@ -1,101 +1,49 @@
 from random import randint
+from gameComponents import winLose, gameVars
 
-# add player and computer lives
-playerLives = 5
-computerLives = 5
+# set up our game loop so that we can keep playing and not exit
+while gameVars.player is False:
+    gameVars.player = input("Choose your weapon: rock, paper or scissors: ")
+    gameVars.computer = gameVars.choices[randint(0, 2)]
 
-# save the player as a variable called player
-# the value of the player will be one of three choices to type (input)
-player= input("choose rock, paper or scissors: ")
+    print("player chose: " + gameVars.player)
+    print("computer chose: " + gameVars.computer)
 
-print("player choose: " + player)
+    if gameVars.computer == gameVars.player:
+        # tie - nothing else to compare, so it'll exit
+        print("tie! try again")
 
-# an array is just a container. it hholds multiple values in a 0-based index
-#you can store anything in an array and retireve it later. arrays have square bracket notation
-choices = ["rock", "paper" , "scissors"]
-player = False
+    elif gameVars.player == "rock":
+        if gameVars.computer == "paper":
+            print("you lose!")
+            gameVars.playerLives = gameVars.playerLives - 1
+        else:
+            print("you win!")
+            gameVars.computerLives = gameVars.computerLives - 1
 
-computer = choices[randint(0,2)]
+    elif gameVars.player == "paper":
+        if gameVars.computer == "scissors":
+            print("you lose!")
+            gameVars.playerLives = gameVars.playerLives - 1
+        else:
+            print("you win!")
+            gameVars.computerLives = gameVars.computerLives - 1
 
-print("computer choose: " + computer)
-# define a win/lose function, make it loop
-def winorlose(status):
-    print("You " + status + "! would you like to play again?")
-    choice = input(" Y / N?")
+    elif gameVars.player == "scissors":
+        if gameVars.computer == "rock":
+            print("you lose!")
+            gameVars.playerLives = gameVars.playerLives - 1
+        else:
+            print("you win!")
+            gameVars.computerLives = gameVars.computerLives - 1
 
-    global playerLives
-    global computerLives
-    global player
+    print("player life count: " + str(gameVars.playerLives))
+    print("computer life count: " + str(gameVars.computerLives))
 
-    if choice == "n":
-        print("better luck next time!")
-        exit()
-    else:
-        # rest and restart game
-        #playerLives = 5
-        #computerLives = 5
-        #player = False
+    if gameVars.playerLives == 0:
+        winLose.winorlose("lost")
 
+    elif gameVars.computerLives == 0:
+        winLose.winorlose("won")
 
-    while player is False:
-
- if (computer == player):
-    print("tie! try again!")
-
- elif (player == "rock"):
-    if (computer == "paper"):
-        print("you lose!")
-        playerLives = playerLives - 1
-    else:
-        print("you win!")
-        computerLives = computerLives - 1
-
- elif (player == "paper"):
-    if (computer == "scissors"):
-        print("you lose!")
-        playerLives = playerLives - 1
-    else:
-        print("you win!")
-        computerLives = computerLives - 1
-
- elif (player == "scissors"):
-    if (computer == "rock"):
-        print("you lose!")
-        playerLives = playerLives - 1
-    else:
-        print("you win!")
-        computerLives = computerLives - 1
-
- print("player life count: "+ str(playerLives))
- print("computer life count: "+ str(computerLives))
-
-
-    if playerLives == 0:
-     #call the winorlose function here
-     winorlose("lost")
-    print("you lost! would you like to play again?")
-    choice = input(" Y / N?")
-
-    if choice == "n":
-        print("better luck next time!")
-        exit()
-    else:
-        # rest and restart game
-            playerLives = 5
-            computerLives = 5
-            player = False
-
-    elif computerLives == 0:
-        print("you won! would you like to play again?")
-        choice = input (" Y / N?")
-
-    if choice == "n":
-            print("better luck next time!")
-            exit()
-    else:
-        # rest and restart game
-            playerLives = 5
-            computerLives = 5
-            player = False
-
-    player= False
+    gameVars.player = False
